@@ -1,25 +1,21 @@
+import classNames from "classnames";
 import s from "./card.module.scss";
-import { useReducer } from "react";
 
 interface Props {
 	number: number;
 	onClick?: (cardNumber: number) => void;
+	hightLight: boolean;
 }
 
 export const Card = (props: Props) => {
-	const { number, onClick } = props;
-	const [flip, setFlip] = useReducer((v) => !v);
+	const { number, onClick, hightLight } = props;
 
-	const renderer = () => {
-		if (flip) {
-			return (
-				<div>
-					<span>Front</span>
-				</div>
-			);
-		}
-
-		return (
+	return (
+		<div
+			className={classNames(s.card, hightLight && s.hightlight)}
+			role={"button"}
+			onClick={() => onClick?.(number)}
+		>
 			<div className={s.back}>
 				<div className={s.top}>
 					<span>{number}</span>
@@ -33,16 +29,6 @@ export const Card = (props: Props) => {
 					<span>{number}</span>
 				</div>
 			</div>
-		);
-	};
-
-	return (
-		<div
-			className={s.card}
-			role={"button"}
-			onClick={() => onClick?.(number)}
-		>
-			{renderer()}
 		</div>
 	);
 };
