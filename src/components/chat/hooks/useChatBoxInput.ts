@@ -1,51 +1,51 @@
-import {useState} from "react";
-import {ChatHistory, ChatMessage} from "../type/ChatInterface.ts";
+import { useState } from "react";
+import { ChatHistory, ChatMessage } from "../type/ChatInterface.ts";
 
 export const useChatBoxInput = () => {
-    const roomId = 1;
-    const [value, setValue] = useState('');
+	const roomId = 1;
+	const [value, setValue] = useState("");
 
-    const onSendClick = () => {
-        setValue('');
+	const onSendClick = () => {
+		setValue("");
 
-        const newMessage: ChatMessage = {
-            id: 1,
-            sender: 'dummy',
-            message: value,
-            timeStamp: new Date().toISOString()
-        }
+		const newMessage: ChatMessage = {
+			id: 1,
+			sender: "dummy",
+			message: value,
+			timeStamp: new Date().toISOString(),
+		};
 
-        putSessionStorage(newMessage);
-    };
+		putSessionStorage(newMessage);
+	};
 
-    const putSessionStorage = (newMessage: ChatMessage) => {
-        const chatStorage = sessionStorage.getItem(roomId);
-        let chatHistory: ChatHistory;
-        if (chatStorage) {
-            chatHistory = JSON.parse(chatStorage);
-        } else {
-            chatHistory = {roomId, messages: []}
-        }
+	const putSessionStorage = (newMessage: ChatMessage) => {
+		const chatStorage = sessionStorage.getItem(String(roomId));
+		let chatHistory: ChatHistory;
+		if (chatStorage) {
+			chatHistory = JSON.parse(chatStorage);
+		} else {
+			chatHistory = { roomId, messages: [] };
+		}
 
-        chatHistory.messages.push(newMessage);
+		chatHistory.messages.push(newMessage);
 
-        sessionStorage.setItem(roomId, JSON.stringify(chatHistory));
-    }
+		sessionStorage.setItem(String(roomId), JSON.stringify(chatHistory));
+	};
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            onSendClick();
-        }
-    };
+	const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			onSendClick();
+		}
+	};
 
-    const onChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value);
-    };
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setValue(e.currentTarget.value);
+	};
 
-    return {
-        onChange,
-        onKeyDown,
-        onSendClick,
-        value,
-    }
-}
+	return {
+		onChange,
+		onKeyDown,
+		onSendClick,
+		value,
+	};
+};

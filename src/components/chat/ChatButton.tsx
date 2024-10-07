@@ -1,6 +1,6 @@
 import s from "./chatButton.module.scss";
 import { ChatBox } from "./chatBox/ChatBox.tsx";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 
 export const ChatButton = () => {
 	// const [open, setOpen] = useReducer(v => !v);

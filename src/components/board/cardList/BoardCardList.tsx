@@ -1,18 +1,12 @@
-import React, { useRef } from "react";
 import { useBoardCardList } from "../hooks/useBoardCardList.ts";
 import { Card } from "../../card/Card.tsx";
 import s from "./boardCardList.module.scss";
 import { BoardCardWrap } from "./BoardCardWrap.tsx";
 import { useSocketContext } from "../../container/socket/SocketProvider.tsx";
 
-interface Props {}
-
-export const BoardCardList: React.FC<React.PropsWithChildren<Props>> = (
-	props
-) => {
+export const BoardCardList = () => {
 	const { cards, ref, maxWidth } = useBoardCardList();
 	const { isGameAvailable } = useSocketContext()!;
-	const childrenRef = useRef(null);
 
 	const renderer = () => {
 		if (!isGameAvailable) {
@@ -27,9 +21,8 @@ export const BoardCardList: React.FC<React.PropsWithChildren<Props>> = (
 						zIndex={index}
 						x={(maxWidth / 35) * index}
 						y={0}
-						ref={childrenRef}
 					>
-						<Card number={card} />
+						<Card number={card} hightLight={false} />
 					</BoardCardWrap>
 				))}
 			</>

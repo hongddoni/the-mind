@@ -36,8 +36,7 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const URL = "http://localhost:3000";
-
+const URL = import.meta.env.VITE_API_URL ?? "";
 export const SocketProvider = (props: Props) => {
 	const { children } = props;
 	const [nickname, setNickname] = useState<string>("");

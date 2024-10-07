@@ -8,14 +8,10 @@ interface Props {
 }
 
 export const BoardCardWrap: React.FC<React.PropsWithChildren<Props>> =
-	forwardRef((props, ref) => {
+	forwardRef((props) => {
 		const { zIndex, children, x, y } = props;
 		return (
-			<div
-				className={s.cardWrap}
-				style={{ zIndex, left: x, top: y }}
-				ref={ref}
-			>
+			<div className={s.cardWrap} style={{ zIndex, left: x, top: y }}>
 				{children}
 			</div>
 		);
