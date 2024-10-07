@@ -1,0 +1,11 @@
+.input {
+  display: flex;
+  gap: 5px;
+
+  .button {
+    background-color: skyblue;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+  }
+}

@@ -1,0 +1,28 @@
+.dashboard {
+	margin-top: 2vh;
+	display: flex;
+	flex-direction: column;
+	min-width: 10vw;
+	align-items: center;
+	gap: 1vw;
+	background-color: white;
+	border-radius: 16px;
+	padding: 2vh;
+
+	.info > span {
+		font-size: 0.8rem;
+	}
+
+	.button {
+		width: 100%;
+		border: none;
+		outline: none;
+		background-color: bisque;
+		padding: 1vh;
+		border-radius: 16px;
+
+		&:active {
+			border: 1px solid black;
+		}
+	}
+}
