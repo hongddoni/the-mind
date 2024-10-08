@@ -56,6 +56,38 @@ export const RuleModal = ({onClose}: {onClose: () => void}) => {
                 </section>
 
                 <section className={s.modal__section}>
+                    <h2 className={s.modal__section__subtitle}>게임 난이도 및 특별 규칙</h2>
+                    <ol className={s.modal__list}>
+                        <li>
+                            플레이어 수에 따른 레벨 수:
+                            <ul>
+                                <li>2명 플레이: 1 ~ 12레벨.</li>
+                                <li>3명 플레이: 1 ~ 10레벨.</li>
+                                <li>4명 플레이: 1 ~ 8레벨.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            생명(하트) 토큰 개수:
+                            <ul>
+                                <li>게임 시작 시 하트 토큰 개수는 플레이어 수에 따라 다릅니다.</li>
+                                <li>하트가 모두 소진되면 게임은 즉시 종료됩니다.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            추가 규칙:
+                            <ul>
+                                <li>
+                                    특정 레벨을 클리어하면 추가적인 하트 토큰이나 슈리켄 토큰을 보상으로 받을 수 있습니다.
+                                </li>
+                                <li>
+                                    레벨 2, 5, 8을 클리어하면 슈리켄이나 하트를 추가로 획득합니다(플레이어 수에 따라 다름).
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+
+                <section className={s.modal__section}>
                     <h2 className={s.modal__section__subtitle}>전략</h2>
                     <ol className={s.modal__list}>
                         <li>심리적 타이밍 맞추기: 서로 대화를 하지 않고 심리적으로 타이밍을 맞추어 카드를 내야 합니다.</li>
