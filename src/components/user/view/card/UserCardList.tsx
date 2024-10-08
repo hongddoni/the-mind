@@ -5,19 +5,19 @@ import { useUserCards } from "../hooks/useUserCards.ts";
 export const UserCardList = () => {
 	const { cards, onClick, minimumNumber } = useUserCards();
 	return (
-		<div>
-			<div>
-				<span>제일 작은 숫자 : {minimumNumber}</span>
-				<button onClick={() => onClick(minimumNumber)}>내기</button>
+		<div className={s.wrap}>
+			<div className={s.minimal}>
+				{minimumNumber !== 0 && (
+					<Card
+						number={minimumNumber}
+						hightLight={false}
+						onClick={() => onClick(minimumNumber)}
+					/>
+				)}
 			</div>
 			<div className={s.cardList}>
 				{cards?.map((card) => (
-					<Card
-						number={card}
-						key={card}
-						onClick={onClick}
-						hightLight={minimumNumber === card}
-					/>
+					<Card number={card} key={card} onClick={onClick} />
 				))}
 			</div>
 		</div>

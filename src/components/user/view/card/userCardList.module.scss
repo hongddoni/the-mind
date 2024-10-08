@@ -1,11 +1,27 @@
-.cardList {
+.wrap {
+	position: relative;
 	display: flex;
-	align-items: center;
-	border: 1px solid black;
-	width: 70vw;
-	height: 20vh;
-	padding: 20px;
-	gap: 10px;
-	overflow-x: auto;
-	overscroll-behavior-x: contain;
+	margin-left: auto;
+	gap: 1rem;
+
+	.minimal {
+		position: fixed;
+		left: 0;
+	}
+
+	.cardList {
+		display: flex;
+		align-items: center;
+		background-color: rgba(225, 223, 223, 0.699);
+		border-radius: 8px;
+		margin: 10px;
+		max-width: 60vw;
+		min-width: 60vw;
+		height: 20vh;
+		padding: 20px;
+		gap: 10px;
+		overflow-x: auto;
+		overflow-y: none;
+		overscroll-behavior-x: contain;
+	}
 }

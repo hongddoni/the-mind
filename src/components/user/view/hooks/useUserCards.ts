@@ -3,7 +3,6 @@ import { useSocketContext } from "../../../container/socket/SocketProvider.tsx";
 
 export const useUserCards = () => {
 	const { onSubmit, cards, removeCard } = useSocketContext()!;
-	// const cards = [2234, 5, 165, 36, 26, 262, 6, 2];
 
 	const onClick = useCallback(
 		(cardNumber: number) => {
@@ -14,9 +13,10 @@ export const useUserCards = () => {
 	);
 
 	const minimumNumber = useMemo(() => {
-		return cards.reduce((acc, cur) => {
+		const minimum = cards.reduce((acc, cur) => {
 			return cur < acc ? cur : acc;
 		}, Infinity);
+		return minimum === Infinity ? 0 : minimum;
 	}, [cards]);
 
 	return {

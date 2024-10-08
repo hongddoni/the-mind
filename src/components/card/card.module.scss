@@ -1,8 +1,10 @@
 .card {
-	min-width: 10%;
-	min-height: calc(10vw * (4 / 3));
+	min-width: 70px;
+	min-height: calc(70px * (4 / 3));
+	width: 10vw;
+	height: calc(10vw * (4 / 3));
 	border-radius: 8px;
-	flex-shrink: 1;
+	flex-shrink: 1 0 0;
 	padding: 8px;
 	cursor: pointer;
 	background-color: white;
@@ -10,6 +12,10 @@
 
 	&.hightlight {
 		border: 2px solid red;
+	}
+
+	&:active {
+		background-color: rgb(198, 196, 196);
 	}
 
 	span {

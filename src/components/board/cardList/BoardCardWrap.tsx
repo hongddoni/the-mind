@@ -11,7 +11,7 @@ export const BoardCardWrap: React.FC<React.PropsWithChildren<Props>> =
 	forwardRef((props) => {
 		const { zIndex, children, x, y } = props;
 		return (
-			<div className={s.cardWrap} style={{ zIndex, left: x, top: y }}>
+			<div className={s.cardWrap} style={{ zIndex, left: `calc(${50 + x}%)`, top: `calc(${50 + y}%)` }}>
 				{children}
 			</div>
 		);

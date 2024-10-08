@@ -1,6 +1,40 @@
 .cardList {
 	position: relative;
-	width: 70vw;
-	height: 50%;
-	background-color: antiquewhite;
+	width: 80vw;
+	height: 60%;
+	border-radius: 12px;
+	background-color: rgba(225, 223, 223, 0.699);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.cardWrap {
+		display: flex;
+		overflow-x: scroll;
+	}
+
+	.ready {
+		display: flex;
+		flex-direction: column;
+		gap: 2vh;
+		width: 100%;
+		height: 100%;
+		align-items: center;
+		justify-content: space-between;
+
+		.info {
+			display: flex;
+			flex-direction: column;
+			gap: 1vh;
+			padding-top: 10vh;
+
+			.description {
+				font-size: 1rem;
+			}
+			.participants {
+				display: flex;
+				gap: 1vw;
+			}
+		}
+	}
 }

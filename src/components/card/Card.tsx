@@ -4,7 +4,7 @@ import s from "./card.module.scss";
 interface Props {
 	number: number;
 	onClick?: (cardNumber: number) => void;
-	hightLight: boolean;
+	hightLight?: boolean;
 }
 
 export const Card = (props: Props) => {
