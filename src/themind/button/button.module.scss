@@ -1,0 +1,24 @@
+.button {
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	outline: none;
+	border: 1px solid transparent;
+	background-color: #195083;
+	color: white;
+
+	&:active {
+		border: 1px solid black;
+	}
+
+	&.black {
+		background-color: black;
+	}
+
+	&.red {
+		background-color: red;
+	}
+
+	&.block {
+		width: 100%;
+	}
+}

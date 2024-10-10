@@ -1,0 +1,16 @@
+.message {
+  display: flex;
+  padding: 5px 8px;
+  width: fit-content;
+  border-radius: 8px;
+
+  &[data-is-owner='true'] {
+    margin-left: auto;
+    background-color: skyblue;
+  }
+
+  &[data-is-owner='false'] {
+    margin-right: auto;
+    background-color: orange;
+  }
+}

@@ -1,0 +1,64 @@
+.board {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	background-color: red;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.dice {
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translate(-50%, -50%);
+
+		.rollingButton {
+			width: 5vw;
+			height: 5vw;
+
+			border-radius: 50%;
+			outline: none;
+			border: none;
+			cursor: pointer;
+
+			&:active {
+				border: 1px solid gray;
+			}
+		}
+	}
+
+	.goal {
+		display: flex;
+		height: 10vh;
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 1vw;
+	}
+
+	.ladder {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 20%;
+		height: 80vh;
+		transform: rotate(-45deg);
+	}
+
+	.waitingLine {
+		border-top: 1px solid gray;
+		width: 100%;
+		height: 10vh;
+		display: flex;
+		justify-content: space-around;
+		gap: 2vw;
+		.characterWrap {
+			padding-top: 2vh;
+			display: flex;
+			gap: 1vw;
+			background-color: wheat;
+		}
+	}
+}

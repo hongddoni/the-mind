@@ -1,0 +1,56 @@
+/* 전체 3D 씬의 스타일 */
+.scene {
+	width: 200px;
+	height: 200px;
+	perspective: 1000px; /* 3D 효과를 위한 원근법 설정 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 주사위의 기본 스타일 */
+.dice {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	transform-style: preserve-3d; /* 자식 요소를 3D로 렌더링 */
+	transition: transform 0.8s ease-out; /* 회전 애니메이션의 부드러운 멈춤 */
+}
+
+/* 주사위의 각 면 스타일 */
+.face {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 주사위가 회전할 때의 애니메이션 */
+.dice.rolling {
+	animation: roll 1s infinite linear; /* 주사위가 구르는 애니메이션 */
+}
+
+/* 주사위 회전 애니메이션 */
+@keyframes roll {
+	0% {
+		transform: rotateX(0deg) rotateY(0deg);
+	}
+	25% {
+		transform: rotateX(90deg) rotateY(45deg);
+	}
+	50% {
+		transform: rotateX(180deg) rotateY(90deg);
+	}
+	75% {
+		transform: rotateX(270deg) rotateY(135deg);
+	}
+	100% {
+		transform: rotateX(360deg) rotateY(180deg);
+	}
+}

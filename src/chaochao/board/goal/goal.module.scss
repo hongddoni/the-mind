@@ -1,0 +1,17 @@
+.goal {
+	width: 5vw;
+	height: 5vw;
+	border-radius: 50%;
+	color: black;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+
+	.character {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}

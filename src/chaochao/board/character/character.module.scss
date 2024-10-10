@@ -1,0 +1,35 @@
+.character {
+	width: 5vw;
+	height: 5vw;
+	border-radius: 50%;
+	position: relative;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		width: 3vw;
+		height: 3vw;
+		background-color: white;
+		border-radius: 50%;
+	}
+
+	&.blue {
+		background-color: blue;
+	}
+
+	&.purple {
+		background-color: purple;
+	}
+
+	&.yellow {
+		background-color: yellow;
+	}
+
+	&.green {
+		background-color: green;
+	}
+}
