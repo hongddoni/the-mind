@@ -1,9 +1,12 @@
-import { ChaoChao } from "./\bchaochao/ChaoChao";
-import { ChaoChaoProvier } from "./\bchaochao/ChaoChaoProvider";
-import { TheMind } from "./themind/TheMind";
+import {SocketProvider} from "./socket/SocketProvider.tsx";
+import {GameSelector} from "./GameSelector.tsx";
 
 function App() {
-	return <TheMind />;
+	return (
+		<SocketProvider>
+			<GameSelector/>
+		</SocketProvider>
+	);
 }
 
 export default App;

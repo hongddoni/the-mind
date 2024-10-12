@@ -1,9 +1,10 @@
 import { ChaoChaoBoard } from "./board/ChaoChaoBoard";
+import {ChaoChaoProvier} from "./ChaoChaoProvider.tsx";
 
 export const ChaoChao = () => {
 	return (
-		<div>
+		<ChaoChaoProvier>
 			<ChaoChaoBoard />
-		</div>
+		</ChaoChaoProvier>
 	);
 };

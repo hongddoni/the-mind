@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { useSocketContext } from "../../../container/socket/SocketProvider.tsx";
+import { useTheMindContext } from "../../../container/socket/TheMindProvider.tsx";
 
 export const useUserCards = () => {
-	const { onSubmit, cards, removeCard } = useSocketContext()!;
+	const { onSubmit, cards, removeCard } = useTheMindContext()!;
 
 	const onClick = useCallback(
 		(cardNumber: number) => {

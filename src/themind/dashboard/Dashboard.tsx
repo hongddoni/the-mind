@@ -1,5 +1,5 @@
 import {Button} from "../button/Button";
-import {useSocketContext} from "../container/socket/SocketProvider";
+import {useTheMindContext} from "../container/socket/TheMindProvider.tsx";
 import s from "./dashboard.module.scss";
 import {Label} from "../label/Label.tsx";
 import {RuleModal} from "../modal/RuleModal.tsx";
@@ -15,7 +15,7 @@ export const Dashboard = () => {
         onSurikenCard,
         onHeartCard,
         onRestart,
-    } = useSocketContext()!;
+    } = useTheMindContext()!;
     const [ruleOpen, setRuleOpen] = useState(false);
 
     return (

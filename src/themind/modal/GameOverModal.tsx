@@ -1,8 +1,8 @@
-import { useSocketContext } from "../container/socket/SocketProvider";
+import { useTheMindContext } from "../container/socket/TheMindProvider.tsx";
 import s from "./gameOverModal.module.scss";
 
 export const GameOverModal = () => {
-	const { isCleared, isGameAvailable } = useSocketContext()!;
+	const { isCleared, isGameAvailable } = useTheMindContext()!;
 
 	if (!isCleared) return;
 

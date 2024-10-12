@@ -2,13 +2,13 @@ import { useBoardCardList } from "../hooks/useBoardCardList.ts";
 import { Card } from "../../card/Card.tsx";
 import s from "./boardCardList.module.scss";
 import { BoardCardWrap } from "./BoardCardWrap.tsx";
-import { useSocketContext } from "../../container/socket/SocketProvider.tsx";
+import { useTheMindContext } from "../../container/socket/TheMindProvider.tsx";
 import { Button } from "../../button/Button.tsx";
 import { Label } from "../../label/Label.tsx";
 
 export const BoardCardList = () => {
 	const { cards, ref } = useBoardCardList();
-	const { isGameAvailable, onReady, users } = useSocketContext()!;
+	const { isGameAvailable, onReady, users } = useTheMindContext()!;
 
 	const renderer = () => {
 		if (!isGameAvailable) {

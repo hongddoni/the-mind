@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
 import { User } from "../../types/User";
+import {useSocketContext} from "../../../socket/SocketProvider.tsx";
 
 interface States {
-	joinGame: () => void;
 	endGame: () => void;
 	onReady: () => void;
 	onSubmit: (cardNumber: number) => void;
@@ -11,9 +10,6 @@ interface States {
 	onRestart: () => void;
 	onSurikenCard: () => void;
 	onHeartCard: () => void;
-
-	nickname: string;
-	setNickname: (value: string) => void;
 
 	isCleared: boolean;
 	users: User[];
@@ -36,13 +32,10 @@ interface Props {
 	children: React.ReactNode;
 }
 
-const URL = import.meta.env.VITE_API_URL ?? "";
-export const SocketProvider = (props: Props) => {
+export const TheMindProvider = (props: Props) => {
 	const { children } = props;
-	const [nickname, setNickname] = useState<string>("");
-	const [socket, setSocket] = useState<Socket | null>(null);
+	const {socket, gameType} = useSocketContext()!;
 	const [users, setUsers] = useState<User[]>([]);
-	const gameType = "default";
 
 	const [cards, setCards] = useState<number[]>([]);
 	const [submittedCard, setSubmittedCard] = useState<number[]>([]);
@@ -56,11 +49,9 @@ export const SocketProvider = (props: Props) => {
 
 	// 소켓 연결과 이벤트 핸들러 설정
 	useEffect(() => {
-		const newSocket = io(URL);
-		setSocket(newSocket);
-
+		if(!socket) return;
 		// 제출된 카드 상태 업데이트
-		newSocket.on(
+		socket.on(
 			"submittedCardsUpdated",
 			(data: { submittedCard: number[] }) => {
 				setSubmittedCard(data.submittedCard); // 실시간으로 상태 업데이트
@@ -68,19 +59,19 @@ export const SocketProvider = (props: Props) => {
 		);
 
 		// 유저가 게임에 참여할 때 플레이어 정보 업데이트
-		newSocket.on("playerJoined", (data: { players: User[] }) => {
+		socket.on("playerJoined", (data: { players: User[] }) => {
 			setUsers(data.players);
 		});
 
 		// 룰 정보 업데이트
-		newSocket.on("ruleInfo", (data: Rule) => {
+		socket.on("ruleInfo", (data: Rule) => {
 			setSurikenCard(data.suriken);
 			setHeartCard(data.heart);
 			setLevel(data.level);
 		});
 
 		// 게임이 시작될 때의 상태 업데이트
-		newSocket.on(
+		socket.on(
 			"gameStarted",
 			(data: { gameType: string; rule: Rule; cards: number[] }) => {
 				setLevel(data.rule.level);
@@ -93,27 +84,27 @@ export const SocketProvider = (props: Props) => {
 		);
 
 		// 레벨업 이벤트 수신 및 상태 업데이트
-		newSocket.on("levelUp", (data: { level: number; cards: number[] }) => {
+		socket.on("levelUp", (data: { level: number; cards: number[] }) => {
 			setLevel(data.level); // 서버에서 전송된 새로운 레벨로 업데이트
 			setCards(data.cards); // 새롭게 부여된 카드 업데이트
 			setSubmittedCard([]); // 레벨업 시 제출된 카드 초기화
 		});
 
-		newSocket.on("surikenDecreased", (data: { suriken: number }) => {
+		socket.on("surikenDecreased", (data: { suriken: number }) => {
 			setSurikenCard(data.suriken);
 		});
 
-		newSocket.on("heartDecreased", (data: { heart: number }) => {
+		socket.on("heartDecreased", (data: { heart: number }) => {
 			setHeartCard(data.heart);
 		});
 
-		newSocket.on("gameEnded", () => {
+		socket.on("gameEnded", () => {
 			setSubmittedCard([]);
 			setIsGameAvailable(false);
 			setCards([]);
 		});
 
-		newSocket.on(
+		socket.on(
 			"gameRestarted",
 			(data: { gameType: string; rule: Rule; cards: number[] }) => {
 				setIsGameAvailable(true);
@@ -124,26 +115,14 @@ export const SocketProvider = (props: Props) => {
 			}
 		);
 
-		newSocket.on("userCards", (data: { userCards: number[] }) => {
-			setCards(data.userCards);
+		socket.on("userCards", (data: { userCards: number[], playerId: string }) => {
+			if(socket.id === data.playerId) setCards(data.userCards);
 		});
 
-		newSocket.on("isCleared", () => {
+		socket.on("isCleared", () => {
 			setIsCleared(true);
 		});
-
-		// 클린업 함수로 컴포넌트 언마운트 시 소켓 연결 해제
-		return () => {
-			newSocket.close();
-		};
 	}, []);
-
-	// 게임 참가
-	const joinGame = () => {
-		if (socket) {
-			socket.emit("joinGame", { gameType, nickname });
-		}
-	};
 
 	const onSurikenCard = () => {
 		if (socket) {
@@ -190,7 +169,6 @@ export const SocketProvider = (props: Props) => {
 	};
 
 	const value = {
-		joinGame,
 		endGame,
 		onReady,
 		onSubmit,
@@ -201,8 +179,6 @@ export const SocketProvider = (props: Props) => {
 
 		isCleared,
 		users,
-		nickname,
-		setNickname,
 		level,
 		surikenCard,
 		heartCard,
@@ -212,12 +188,12 @@ export const SocketProvider = (props: Props) => {
 	};
 
 	return (
-		<SocketContext.Provider value={value}>
+		<TheMindContext.Provider value={value}>
 			{children}
-		</SocketContext.Provider>
+		</TheMindContext.Provider>
 	);
 };
 
-export const SocketContext = createContext<States | undefined>(undefined!);
+export const TheMindContext = createContext<States | undefined>(undefined!);
 
-export const useSocketContext = () => useContext(SocketContext);
+export const useTheMindContext = () => useContext(TheMindContext);

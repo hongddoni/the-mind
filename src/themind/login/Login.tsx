@@ -1,6 +1,6 @@
-import React from "react";
-import { useSocketContext } from "../container/socket/SocketProvider";
 import s from "./login.module.scss";
+import {useSocketContext} from "../../socket/SocketProvider.tsx";
+import {GameType} from "../../type/gameType.ts";
 
 interface Props {
 	onClose: () => void;
@@ -8,12 +8,12 @@ interface Props {
 
 export const Login = (props: Props) => {
 	const { onClose } = props;
-	const { nickname, setNickname, joinGame } = useSocketContext()!;
+	const { nickname, setNickname, joinGame, setGameType, gameType } = useSocketContext()!;
 
-	const startGame = () => {
+	const startGame = (type: GameType) => {
 		if (nickname.length < 1) return;
 
-		joinGame();
+		joinGame(type);
 		onClose();
 	};
 
@@ -23,11 +23,10 @@ export const Login = (props: Props) => {
 		setNickname(value);
 	};
 
-	const onKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter") {
-			startGame();
-		}
-	};
+	const onGameClick = (type: GameType) => {
+		setGameType(type);
+		startGame(type);
+	}
 
 	return (
 		<div className={s.login}>
@@ -41,13 +40,14 @@ export const Login = (props: Props) => {
 						placeholder="닉네임"
 						value={nickname}
 						onChange={onChange}
-						onKeyDown={onKeyDown}
 						maxLength={6}
 					/>
 				</div>
-				<button className={s.button} onClick={startGame}>
-					참가!
-				</button>
+
+				{gameType === null && <div>
+					<button className={s.button} onClick={() => onGameClick('theMind')}>theMind</button>
+					<button className={s.button} onClick={() => onGameClick('chaoChao')}>chaochao</button>
+				</div>}
 			</div>
 		</div>
 	);
