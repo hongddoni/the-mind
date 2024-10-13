@@ -1,4 +1,4 @@
-import { useChaChaoContext } from "../ChaoChaoProvider";
+import { useChaoChaoContext } from "../ChaoChaoProvider";
 import { Character } from "./character/Character";
 import s from "./ladderArray.module.scss";
 
@@ -7,12 +7,12 @@ interface Props {
 }
 
 export const LadderArray = (props: Props) => {
-	const context = useChaChaoContext()!;
+	const context = useChaoChaoContext()!;
 	const { ladderLevel } = props;
 
 	return (
 		<div className={s.ladder}>
-			{context.players.map((p) =>
+			{context.players.reverse().map((p) =>
 				p.characters.map((c) => {
 					if (
 						c.status === "playing" &&

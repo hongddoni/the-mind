@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { User } from "../../types/User";
 import {useSocketContext} from "../../../socket/SocketProvider.tsx";
 
 interface States {
@@ -12,7 +11,6 @@ interface States {
 	onHeartCard: () => void;
 
 	isCleared: boolean;
-	users: User[];
 	cards: number[];
 	submittedCard: number[];
 
@@ -35,7 +33,6 @@ interface Props {
 export const TheMindProvider = (props: Props) => {
 	const { children } = props;
 	const {socket, gameType} = useSocketContext()!;
-	const [users, setUsers] = useState<User[]>([]);
 
 	const [cards, setCards] = useState<number[]>([]);
 	const [submittedCard, setSubmittedCard] = useState<number[]>([]);
@@ -51,17 +48,14 @@ export const TheMindProvider = (props: Props) => {
 	useEffect(() => {
 		if(!socket) return;
 		// 제출된 카드 상태 업데이트
+
 		socket.on(
 			"submittedCardsUpdated",
 			(data: { submittedCard: number[] }) => {
+				console.log(data.submittedCard)
 				setSubmittedCard(data.submittedCard); // 실시간으로 상태 업데이트
 			}
 		);
-
-		// 유저가 게임에 참여할 때 플레이어 정보 업데이트
-		socket.on("playerJoined", (data: { players: User[] }) => {
-			setUsers(data.players);
-		});
 
 		// 룰 정보 업데이트
 		socket.on("ruleInfo", (data: Rule) => {
@@ -178,7 +172,6 @@ export const TheMindProvider = (props: Props) => {
 		onHeartCard,
 
 		isCleared,
-		users,
 		level,
 		surikenCard,
 		heartCard,

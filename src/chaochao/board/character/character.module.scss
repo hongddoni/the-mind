@@ -4,32 +4,19 @@
 	border-radius: 50%;
 	position: relative;
 
-	&::before {
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-
-		width: 3vw;
-		height: 3vw;
-		background-color: white;
-		border-radius: 50%;
-	}
-
 	&.blue {
-		background-color: blue;
+		background-color: #003F66;
 	}
 
 	&.purple {
-		background-color: purple;
+		background-color: #A865B5;
 	}
 
 	&.yellow {
-		background-color: yellow;
+		background-color: #FFD358;
 	}
 
 	&.green {
-		background-color: green;
+		background-color: #6d926d;
 	}
 }

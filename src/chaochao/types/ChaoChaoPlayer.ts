@@ -1,20 +1,39 @@
-export type ChaoChaoPlayerColors = "blue" | "yellow" | "purple" | "green";
+export type GameStatus = 'waiting' | 'playing' | 'ended';
 
 export type ChaoChaoCharacterStatus =
-	| "wating"
-	| "playing"
-	| "complete"
-	| "deleted";
+    | "wating"
+    | "playing"
+    | "complete"
+    | "deleted";
+
+export type ChaoChaoColors = "blue" | "yellow" | "purple" | "green";
+export const ChaoChaoColorsArray = ["blue", "yellow", "purple", "green"] as const;
 
 export interface ChaoChaoCharacter {
-	id: string; // id = color + index
-	ladderLevel: number; // 0 ~ 7
-	status: ChaoChaoCharacterStatus;
-	completeLevel: number; // 0 ~ 10
+    id: string; // id = color + index
+    ladderLevel: number; // 0 ~ 7
+    status: ChaoChaoCharacterStatus;
+    completeLevel: number; // 0 ~ 10
 }
 
 export interface ChaoChaoPlayer {
-	nickname: string;
-	color: ChaoChaoPlayerColors;
-	characters: ChaoChaoCharacter[];
+    id: string;
+    nickname: string;
+    color: ChaoChaoColors;
+    status: 'waiting' | 'ready' | 'roll' | 'judge' | 'playing' | 'submit';
+    characters: ChaoChaoCharacter[];
+}
+
+export interface ChaoChaoRule {
+    completedPlayers: string[];
+    rollingTurn: string; // id
+    rollingNumber: string;
+    publishNumber: string;
+    rollingStatus: 'paused' | 'ready' | 'insert' | 'waiting';
+}
+
+export interface ChaoChaoGame {
+    players: ChaoChaoPlayer[];
+    status: GameStatus;
+    rule: ChaoChaoRule;
 }

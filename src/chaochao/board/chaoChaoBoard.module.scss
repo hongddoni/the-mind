@@ -2,10 +2,45 @@
 	position: relative;
 	width: 100%;
 	height: 100vh;
-	background-color: red;
+	background: white;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	.participantBoard {
+		width: 100%;
+		background-color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 1vw 1.5vw;
+		border-radius: 8px;
+
+		.nickname {
+			display: flex;
+			gap: 1vw;
+			padding: 1vw;
+			border-radius: 16px;
+			color: white;
+
+			&.blue {
+				background-color: #003F66;
+			}
+
+			&.yellow {
+				color: black;
+				background-color: #FFD358;
+			}
+
+			&.purple {
+				background-color: #A865B5;
+			}
+
+			&.green {
+				background-color: #6d926d;
+			}
+		}
+	}
 
 	.dice {
 		position: absolute;
@@ -16,7 +51,6 @@
 		.rollingButton {
 			width: 5vw;
 			height: 5vw;
-
 			border-radius: 50%;
 			outline: none;
 			border: none;
@@ -32,7 +66,6 @@
 		display: flex;
 		height: 10vh;
 		width: 100%;
-		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 		gap: 1vw;
@@ -58,7 +91,6 @@
 			padding-top: 2vh;
 			display: flex;
 			gap: 1vw;
-			background-color: wheat;
 		}
 	}
 }

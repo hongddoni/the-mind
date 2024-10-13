@@ -24,6 +24,7 @@ export const Login = (props: Props) => {
 	};
 
 	const onGameClick = (type: GameType) => {
+		if(nickname.length < 1) return;
 		setGameType(type);
 		startGame(type);
 	}

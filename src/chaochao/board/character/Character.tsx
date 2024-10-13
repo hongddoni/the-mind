@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import s from "./character.module.scss";
-import { ChaoChaoPlayerColors } from "../../types/ChaoChaoPlayer";
+import { ChaoChaoColors } from "../../types/ChaoChaoPlayer";
 
 interface Props {
-	color: ChaoChaoPlayerColors;
+	color: ChaoChaoColors;
 }
 
 export const Character = (props: Props) => {

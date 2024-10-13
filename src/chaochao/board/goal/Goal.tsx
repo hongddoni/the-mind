@@ -1,4 +1,4 @@
-import { useChaChaoContext } from "../../ChaoChaoProvider";
+import { useChaoChaoContext } from "../../ChaoChaoProvider";
 import { Character } from "../character/Character";
 import s from "./goal.module.scss";
 
@@ -8,7 +8,7 @@ interface Props {
 
 export const Goal = (props: Props) => {
 	const { level } = props;
-	const context = useChaChaoContext()!;
+	const context = useChaoChaoContext()!;
 
 	return (
 		<div className={s.goal}>

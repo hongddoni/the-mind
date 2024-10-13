@@ -1,152 +1,94 @@
-import React, { createContext, useContext, useState } from "react";
-import { ChaoChaoPlayer } from "./types/ChaoChaoPlayer";
-
-const dummys: ChaoChaoPlayer[] = [
-	{
-		nickname: "1",
-		color: "blue",
-		characters: [
-			{
-				id: "blue-1",
-				ladderLevel: 1,
-				status: "playing",
-				completeLevel: 0,
-			},
-			{
-				id: "blue-2",
-				ladderLevel: 3,
-				status: "playing",
-				completeLevel: 0,
-			},
-			{
-				id: "blue-3",
-				ladderLevel: 4,
-				status: "playing",
-				completeLevel: 0,
-			},
-			{
-				id: "blue-4",
-				ladderLevel: 7,
-				status: "playing",
-				completeLevel: 0,
-			},
-		],
-	},
-	{
-		nickname: "2",
-		color: "purple",
-		characters: [
-			{
-				id: "purple-1",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-			{
-				id: "purple-2",
-				ladderLevel: 2,
-				status: "playing",
-				completeLevel: 0,
-			},
-			{
-				id: "purple-3",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-			{
-				id: "purple-4",
-				ladderLevel: 0,
-				status: "complete",
-				completeLevel: 1,
-			},
-		],
-	},
-	{
-		nickname: "3",
-		color: "yellow",
-		characters: [
-			{
-				id: "yellow-1",
-				ladderLevel: 1,
-				status: "playing",
-				completeLevel: 0,
-			},
-			{
-				id: "yellow-2",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-			{
-				id: "yellow-3",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-			{
-				id: "yellow-4",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-		],
-	},
-	{
-		nickname: "4",
-		color: "green",
-		characters: [
-			{
-				id: "green-1",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-			{
-				id: "green-2",
-				ladderLevel: 0,
-				status: "wating",
-				completeLevel: 0,
-			},
-			{
-				id: "green-3",
-				ladderLevel: 0,
-				status: "complete",
-				completeLevel: 2,
-			},
-			{
-				id: "green-4",
-				ladderLevel: 0,
-				status: "complete",
-				completeLevel: 3,
-			},
-		],
-	},
-];
+import React, {createContext, useContext, useEffect, useState} from "react";
+import {ChaoChaoGame, ChaoChaoPlayer, ChaoChaoRule, GameStatus} from "./types/ChaoChaoPlayer";
+import {useSocketContext} from "../socket/SocketProvider.tsx";
 
 interface Props {
-	children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 interface States {
-	players: ChaoChaoPlayer[];
+    players: ChaoChaoPlayer[];
+    onReady: () => void;
+    rollTheDice: () => void;
+    onLieClick: () => void;
+    onTrueClick: () => void;
+
+    onDiceSubmit: (result: string, value: string) => void;
+    gameStatus: GameStatus;
+
+    rule: ChaoChaoRule | null;
 }
 
 const ChaoChaoContext = createContext<States | undefined>(undefined!);
 
-export const useChaChaoContext = () => useContext(ChaoChaoContext);
+export const useChaoChaoContext = () => useContext(ChaoChaoContext);
 
-export const ChaoChaoProvier = (props: Props) => {
-	const { children } = props;
-	const [players, setPlayers] = useState(dummys);
+export const ChaoChaoProvider = (props: Props) => {
+    const {children} = props;
+    const {socket} = useSocketContext()!;
+    const [players, setPlayers] = useState<ChaoChaoPlayer[]>([]);
+    const [rule, setRule] = useState<ChaoChaoRule | null>(null);
+    const [gameStatus, setGameStatus] = useState<GameStatus>('waiting');
 
-	const value = {
-		players,
-	};
+    useEffect(() => {
+        if (!socket) return;
 
-	return (
-		<ChaoChaoContext.Provider value={value}>
-			{children}
-		</ChaoChaoContext.Provider>
-	);
+        socket.on("chaoChaoStatusUpdated", (data: ChaoChaoGame) => {
+            setPlayers(data.players);
+            setRule(data.rule);
+            setGameStatus(gameStatus);
+        });
+    }, [socket]);
+
+    const onReady = () => {
+        if (socket) {
+            socket.emit('setChaoChaoPlayerReady');
+            socket.on("chaoChaoStatusUpdated", (data: ChaoChaoGame) => {
+                setPlayers(data.players);
+                setRule(data.rule);
+                setGameStatus('playing');
+            });
+        }
+    }
+
+    const rollTheDice = () => {
+        if (socket) {
+            socket.emit('rollTheDice');
+        }
+    }
+
+    const onTrueClick = () => {
+        if (socket) {
+            socket.emit('judgeTrue', {userId: socket.id});
+        }
+    }
+
+    const onLieClick = () => {
+        if (socket) {
+            socket.emit('judgeLie', {userId: socket.id});
+        }
+    }
+
+    const onDiceSubmit = (realValue: string, submitValue: string) => {
+        if (socket) {
+            socket.emit('submitDice', ({userId: socket.id, realValue, submitValue}));
+        }
+    }
+
+    const value = {
+        players,
+        onReady,
+        onLieClick,
+        onTrueClick,
+        rollTheDice,
+        onDiceSubmit,
+        gameStatus,
+        rule
+    };
+
+    return (
+        <ChaoChaoContext.Provider value={value}>
+            {children}
+        </ChaoChaoContext.Provider>
+    );
 };

@@ -5,10 +5,12 @@ import { BoardCardWrap } from "./BoardCardWrap.tsx";
 import { useTheMindContext } from "../../container/socket/TheMindProvider.tsx";
 import { Button } from "../../button/Button.tsx";
 import { Label } from "../../label/Label.tsx";
+import {useSocketContext} from "../../../socket/SocketProvider.tsx";
 
 export const BoardCardList = () => {
 	const { cards, ref } = useBoardCardList();
-	const { isGameAvailable, onReady, users } = useTheMindContext()!;
+	const { isGameAvailable, onReady } = useTheMindContext()!;
+	const {users} = useSocketContext()!;
 
 	const renderer = () => {
 		if (!isGameAvailable) {

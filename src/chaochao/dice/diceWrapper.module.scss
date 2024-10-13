@@ -5,7 +5,7 @@
 	background-color: rgba(198, 198, 198, 0.794);
 	z-index: 99;
 
-	.dice {
+	.modal {
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -25,13 +25,71 @@
 			}
 		}
 
-		.result {
+		.resultWrap {
 			display: flex;
-			background-color: rgb(161, 161, 161);
-			padding: 1vw 1.5vw;
-			border-radius: 8px;
-			font-size: 1.5rem;
-			font-weight: 700;
+			flex-direction: column;
+
+			.result {
+				background-color: rgb(161, 161, 161);
+				padding: 1vw 1.5vw;
+				border-radius: 8px;
+				font-size: 1.5rem;
+				font-weight: 700;
+			}
+
+			.buttonWrap {
+				display: flex;
+				gap: 1vw;
+
+				.button {
+					outline: none;
+					padding: 3vw 3.5vw;
+					color: black;
+					border-radius: 6px;
+					border: 2px solid transparent;
+
+					&:active {
+						border: 2px solid gray;
+					}
+				}
+			}
+		}
+
+		.opinion {
+			display: flex;
+			flex-direction: column;
+			gap: 2vh;
+
+			.text {
+				padding: 2vw;
+				background-color: white;
+				color: black;
+				border-radius: 8px;
+			}
+
+			.buttonWrap {
+				display: flex;
+				gap: 3vw;
+				.button {
+					outline: none;
+					padding: 5vw 5.5vw;
+					color: white;
+					border-radius: 6px;
+					border: 2px solid transparent;
+
+					&:active {
+						border: 2px solid gray;
+					}
+
+					&.true {
+						background-color: #195083;
+					}
+
+					&.false {
+						background-color: #83192c;
+					}
+				}
+			}
 		}
 	}
 }

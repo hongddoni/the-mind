@@ -4,10 +4,10 @@ import s from "./dashboard.module.scss";
 import {Label} from "../label/Label.tsx";
 import {RuleModal} from "../modal/RuleModal.tsx";
 import {useState} from "react";
+import {useSocketContext} from "../../socket/SocketProvider.tsx";
 
 export const Dashboard = () => {
     const {
-        users,
         level,
         heartCard,
         surikenCard,
@@ -16,6 +16,7 @@ export const Dashboard = () => {
         onHeartCard,
         onRestart,
     } = useTheMindContext()!;
+    const {users} = useSocketContext()!;
     const [ruleOpen, setRuleOpen] = useState(false);
 
     return (
